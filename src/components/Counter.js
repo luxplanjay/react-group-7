@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
@@ -24,6 +22,8 @@ export default class Counter extends Component {
   inputIds = {
     step: shortid.generate(),
   };
+
+  componentDidMount() {}
 
   handleStepChange = evt => {
     this.setState({

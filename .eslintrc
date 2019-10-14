@@ -34,6 +34,21 @@
       2,
       "always",
       { "ignoreClassFields": true }
+    ],
+    "react/static-property-placement": [1, "static public field"],
+    "react/state-in-constructor": [1, "never"],
+    "react/sort-comp": [
+      2,
+      {
+        "order": [
+          "static-methods",
+          "static-variables",
+          "instance-variables",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
+      }
     ]
   },
   "globals": {
