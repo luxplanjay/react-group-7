@@ -34,32 +34,23 @@ export default class App extends Component {
       completed: false,
     };
 
-    this.setState(
-      state => ({
-        notes: [...state.notes, note],
-      }),
-      this.saveToStorage,
-    );
+    this.setState(state => ({
+      notes: [...state.notes, note],
+    }));
   };
 
   deleteNote = noteId => {
-    this.setState(
-      state => ({
-        notes: state.notes.filter(note => note.id !== noteId),
-      }),
-      this.saveToStorage,
-    );
+    this.setState(state => ({
+      notes: state.notes.filter(note => note.id !== noteId),
+    }));
   };
 
   updateNoteStatus = noteId => {
-    this.setState(
-      state => ({
-        notes: state.notes.map(note =>
-          note.id === noteId ? { ...note, completed: !note.completed } : note,
-        ),
-      }),
-      this.saveToStorage,
-    );
+    this.setState(state => ({
+      notes: state.notes.map(note =>
+        note.id === noteId ? { ...note, completed: !note.completed } : note,
+      ),
+    }));
   };
 
   // updateNoteStatus = noteId => {
