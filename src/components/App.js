@@ -1,47 +1,96 @@
 import React, { Component } from 'react';
-import SignupForm from './SignupForm';
-import FriendList from './FriendList';
+import shortid from 'shortid';
+import NoteList from './NoteList';
+import NoteEditor from './NoteEditor';
+import storage from '../services/storage';
 
-const getVisibleFriends = (allFriends, filter) => {
-  return allFriends.filter(friend => friend.includes(filter));
-};
-
-class App extends Component {
+export default class App extends Component {
   state = {
-    friends: ['mango', 'poly', 'ajax', 'kiwi'],
-    filter: '',
+    notes: [],
   };
 
-  handleFilterChange = e => {
-    this.setState({
-      filter: e.currentTarget.value,
-    });
+  componentDidMount() {
+    console.log('componentDidMount');
+
+    const notes = storage.get('notes');
+
+    if (notes) {
+      this.setState({ notes });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { notes } = this.state;
+
+    if (prevState.notes !== notes) {
+      storage.save('notes', notes);
+    }
+  }
+
+  saveNote = text => {
+    const note = {
+      id: shortid.generate(),
+      text,
+      completed: false,
+    };
+
+    this.setState(
+      state => ({
+        notes: [...state.notes, note],
+      }),
+      this.saveToStorage,
+    );
   };
 
-  submitForm = obj => {
-    console.log(obj);
+  deleteNote = noteId => {
+    this.setState(
+      state => ({
+        notes: state.notes.filter(note => note.id !== noteId),
+      }),
+      this.saveToStorage,
+    );
   };
+
+  updateNoteStatus = noteId => {
+    this.setState(
+      state => ({
+        notes: state.notes.map(note =>
+          note.id === noteId ? { ...note, completed: !note.completed } : note,
+        ),
+      }),
+      this.saveToStorage,
+    );
+  };
+
+  // updateNoteStatus = noteId => {
+  //   this.setState(state => ({
+  //     notes: state.notes.map(note => {
+  //       if (note.id === noteId) {
+  //         return {
+  //           ...note,
+  //           completed: !note.completed,
+  //         };
+  //       }
+
+  //       return note;
+  //     }),
+  //   }));
+  // };
 
   render() {
-    const { friends, filter } = this.state;
-
-    const visibleFriends = getVisibleFriends(friends, filter);
-
+    console.log('render');
+    const { notes } = this.state;
     return (
       <div className="App">
-        <input
-          className="Input"
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={this.handleFilterChange}
-        />
-
-        {visibleFriends.length > 0 && <FriendList friends={visibleFriends} />}
-        <SignupForm onSubmit={this.submitForm} />
+        <NoteEditor onSave={this.saveNote} />
+        {notes.length > 0 && (
+          <NoteList
+            notes={notes}
+            onDeleteNote={this.deleteNote}
+            onUpdateCompleted={this.updateNoteStatus}
+          />
+        )}
       </div>
     );
   }
 }
-
-export default App;
