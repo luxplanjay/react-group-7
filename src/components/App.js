@@ -1,44 +1,49 @@
-import React, { Component } from 'react';
-import SignupForm from './SignupForm';
-import FriendList from './FriendList';
+/* eslint-disable */
+import React, { Component, createRef } from 'react';
+import Player from './Player';
+import Modal from './Modal';
 
-const getVisibleFriends = (allFriends, filter) => {
-  return allFriends.filter(friend => friend.includes(filter));
-};
+// cdu: https://codesandbox.io/s/x99l663olz?fontsize=14
+// gsbu + cdu: https://codesandbox.io/s/mjzjk3ny9?fontsize=14
 
 class App extends Component {
   state = {
-    friends: ['mango', 'poly', 'ajax', 'kiwi'],
-    filter: '',
+    isModalOpen: false,
   };
 
-  handleFilterChange = e => {
-    this.setState({
-      filter: e.currentTarget.value,
-    });
-  };
+  openModal = () => this.setState({ isModalOpen: true });
 
-  submitForm = obj => {
-    console.log(obj);
-  };
+  closeModal = () => this.setState({ isModalOpen: false });
 
   render() {
-    const { friends, filter } = this.state;
-
-    const visibleFriends = getVisibleFriends(friends, filter);
-
+    const { isModalOpen } = this.state;
     return (
       <div className="App">
-        <input
-          className="Input"
-          type="text"
-          name="filter"
-          value={filter}
-          onChange={this.handleFilterChange}
-        />
+        {/* <Player source="http://techslides.com/demos/sample-videos/small.mp4" /> */}
 
-        {visibleFriends.length > 0 && <FriendList friends={visibleFriends} />}
-        <SignupForm onSubmit={this.submitForm} />
+        <button type="button" onClick={this.openModal}>
+          Open Modal
+        </button>
+
+        {isModalOpen && (
+          <Modal onClose={this.closeModal}>
+            <h1>Modal Content</h1>
+            <p>
+              In user interface design for computer applications, a modal window
+              is a graphical control element subordinate to an application's
+              main window. It creates a mode that disables the main window but
+              keeps it visible, with the modal window as a child window in front
+              of it. Users must interact with the modal window before they can
+              return to the parent application. This avoids interrupting the
+              workflow on the main window. Modal windows are sometimes called
+              heavy windows or modal dialogs because they often display a dialog
+              box.
+            </p>
+            <button type="button" onClick={this.closeModal}>
+              Close Modal
+            </button>
+          </Modal>
+        )}
       </div>
     );
   }
