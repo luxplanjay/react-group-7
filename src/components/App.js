@@ -1,48 +1,81 @@
 /* eslint-disable */
-import React, { Component, createRef } from 'react';
-import Player from './Player';
-import Modal from './Modal';
 
-// cdu: https://codesandbox.io/s/x99l663olz?fontsize=14
-// gsbu + cdu: https://codesandbox.io/s/mjzjk3ny9?fontsize=14
+import React, { Component } from 'react';
+import ArticleList from './ArticleList';
+import * as articleAPI from '../services/article-api';
+import Loader from './Loader';
+import ErrorNotification from './ErrorNotification';
+import SearchBar from './SearchBar';
+
+/*
+ * Функция-помошник, которая возвращает массив объектов
+ * такого формата, который ожидает компонент
+ */
+const mapper = articles => {
+  return articles.map(({ objectID: id, url: link, ...props }) => ({
+    id,
+    link,
+    ...props,
+  }));
+};
 
 class App extends Component {
   state = {
-    isModalOpen: false,
+    articles: [],
+    isLoading: false,
+    error: null,
+    pageNumber: 0,
+    query: '',
   };
 
-  openModal = () => this.setState({ isModalOpen: true });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query) {
+      this.fetchArticles();
+    }
+  }
 
-  closeModal = () => this.setState({ isModalOpen: false });
+  onSearch = query => {
+    this.setState({ query, articles: [], pageNumber: 0 });
+  };
+
+  fetchArticles = () => {
+    const { query, pageNumber } = this.state;
+
+    this.setState({ isLoading: true });
+
+    articleAPI
+      .fetchArticles(query, pageNumber)
+      .then(articles => {
+        this.setState(state => ({
+          articles: [...state.articles, ...mapper(articles)],
+          pageNumber: state.pageNumber + 1,
+        }));
+      })
+      .catch(error => {
+        this.setState({ error });
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+  };
 
   render() {
-    const { isModalOpen } = this.state;
+    const { articles, isLoading, error } = this.state;
+
     return (
       <div className="App">
-        {/* <Player source="http://techslides.com/demos/sample-videos/small.mp4" /> */}
+        <SearchBar onSearch={this.onSearch} />
 
-        <button type="button" onClick={this.openModal}>
-          Open Modal
-        </button>
+        {error && <ErrorNotification message={error.message} />}
 
-        {isModalOpen && (
-          <Modal onClose={this.closeModal}>
-            <h1>Modal Content</h1>
-            <p>
-              In user interface design for computer applications, a modal window
-              is a graphical control element subordinate to an application's
-              main window. It creates a mode that disables the main window but
-              keeps it visible, with the modal window as a child window in front
-              of it. Users must interact with the modal window before they can
-              return to the parent application. This avoids interrupting the
-              workflow on the main window. Modal windows are sometimes called
-              heavy windows or modal dialogs because they often display a dialog
-              box.
-            </p>
-            <button type="button" onClick={this.closeModal}>
-              Close Modal
-            </button>
-          </Modal>
+        {isLoading && <Loader />}
+
+        {articles.length > 0 && <ArticleList articles={articles} />}
+
+        {articles.length > 0 && (
+          <button type="button" onClick={this.fetchArticles}>
+            Load more articles
+          </button>
         )}
       </div>
     );
