@@ -1,82 +1,52 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
-import ArticleList from './ArticleList';
-import * as articleAPI from '../services/article-api';
-import Loader from './Loader';
-import ErrorNotification from './ErrorNotification';
-import SearchBar from './SearchBar';
+import Profile from './Profile';
+import Toggle from './Toggle';
+// import Statistics from './Statistics';
 
-/*
- * Функция-помошник, которая возвращает массив объектов
- * такого формата, который ожидает компонент
- */
-const mapper = articles => {
-  return articles.map(({ objectID: id, url: link, ...props }) => ({
-    id,
-    link,
-    ...props,
-  }));
-};
+// import WithBorder from './WithBorder';
+
+const statisticalData = [
+  { id: 'id-1', label: '.docx', percentage: 22 },
+  { id: 'id-2', label: '.pdf', percentage: 4 },
+  { id: 'id-3', label: '.mp3', percentage: 17 },
+  { id: 'id-4', label: '.psd', percentage: 47 },
+  { id: 'id-5', label: '.pdf', percentage: 10 },
+];
 
 class App extends Component {
-  state = {
-    articles: [],
-    isLoading: false,
-    error: null,
-    pageNumber: 0,
-    query: '',
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
-      this.fetchArticles();
-    }
-  }
-
-  onSearch = query => {
-    this.setState({ query, articles: [], pageNumber: 0 });
-  };
-
-  fetchArticles = () => {
-    const { query, pageNumber } = this.state;
-
-    this.setState({ isLoading: true });
-
-    articleAPI
-      .fetchArticles(query, pageNumber)
-      .then(articles => {
-        this.setState(state => ({
-          articles: [...state.articles, ...mapper(articles)],
-          pageNumber: state.pageNumber + 1,
-        }));
-      })
-      .catch(error => {
-        this.setState({ error });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  };
-
   render() {
-    const { articles, isLoading, error } = this.state;
-
     return (
       <div className="App">
-        <SearchBar onSearch={this.onSearch} />
+        <Toggle>
+          {(on, toggle) => (
+            <>
+              <button type="button" onClick={toggle}>
+                {on ? 'Hide' : 'Show'}
+              </button>
+              {on && (
+                <Profile
+                  avatar="https://s3.amazonaws.com/uifaces/faces/twitter/michaelcomiskey/128.jpg"
+                  name="Poly"
+                />
+              )}
+            </>
+          )}
+        </Toggle>
 
-        {error && <ErrorNotification message={error.message} />}
+        <Toggle>
+          {(on, toggle) => (
+            <>
+              <input type="checkbox" onChange={toggle} checked={on} />
 
-        {isLoading && <Loader />}
-
-        {articles.length > 0 && <ArticleList articles={articles} />}
-
-        {articles.length > 0 && (
-          <button type="button" onClick={this.fetchArticles}>
-            Load more articles
-          </button>
-        )}
+              {on && (
+                <Profile
+                  avatar="https://s3.amazonaws.com/uifaces/faces/twitter/michaelcomiskey/128.jpg"
+                  name="Poly"
+                />
+              )}
+            </>
+          )}
+        </Toggle>
       </div>
     );
   }
