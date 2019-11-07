@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import qs from 'qs';
 // import InlineShowDetails from '../components/InlineShowDetails';
 import Searchbar from '../components/Searchbar';
 import tvApiService from '../services/tv-api-service';
+
+const getQueryPramsFromProps = props =>
+  qs.parse(props.location.search.slice(1));
 
 export default class ShowsPage extends Component {
   state = {
@@ -10,24 +14,31 @@ export default class ShowsPage extends Component {
   };
 
   componentDidMount() {
-    const query = new URLSearchParams(this.props.location.search).get('query');
+    const queryParams = getQueryPramsFromProps(this.props);
 
-    if (!query) {
+    // Что делать если нужен обязательный параметр
+    // console.log('Limit: ', queryParams.limit);
+
+    // if (!queryParams.limit) {
+    //   console.log(this.props.location.search);
+    //   this.props.history.replace({
+    //     ...this.props.location,
+    //     search: `${this.props.location.search}&limit=10`,
+    //   });
+    // }
+
+    if (!queryParams.query) {
       return;
     }
 
-    tvApiService.fetchShowWithQuery(query).then(shows => {
+    tvApiService.fetchShowWithQuery(queryParams.query).then(shows => {
       this.setState({ shows });
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prevQuery = new URLSearchParams(prevProps.location.search).get(
-      'query',
-    );
-    const nextQuery = new URLSearchParams(this.props.location.search).get(
-      'query',
-    );
+    const { query: prevQuery } = getQueryPramsFromProps(prevProps);
+    const { query: nextQuery } = getQueryPramsFromProps(this.props);
 
     if (prevQuery === nextQuery) {
       return;
@@ -56,7 +67,14 @@ export default class ShowsPage extends Component {
         <ul>
           {this.state.shows.map(show => (
             <li key={show.id}>
-              <Link to={`${match.url}/${show.id}`}>{show.name}</Link>
+              <Link
+                to={{
+                  pathname: `${match.url}/${show.id}`,
+                  state: { from: this.props.location },
+                }}
+              >
+                {show.name}
+              </Link>
             </li>
           ))}
         </ul>
