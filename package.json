@@ -11,6 +11,7 @@
     "react-scripts": "3.2.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
+    "reselect": "^4.0.0",
     "shortid": "^2.2.15",
     "validator": "^11.1.0"
   },

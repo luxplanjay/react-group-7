@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import timerReducer from './timer/timerReducer';
-import noteReducer from './notes/noteReducer';
+import notesReducer from './notes/notesReducer';
 
 export default combineReducers({
-  value: timerReducer,
-  notes: noteReducer,
+  timerValue: timerReducer,
+  notes: notesReducer,
 });

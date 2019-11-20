@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import * as timerActions from '../../redux/timer/timerActions';
 import Timer from './Timer';
+import * as timerActions from '../../redux/timer/timerActions';
+import timerSelectors from '../../redux/timer/timerSelectors';
 
 const mapStateToProps = state => {
   return {
-    value: state.value,
+    value: timerSelectors.getTimerValue(state),
   };
 };
 

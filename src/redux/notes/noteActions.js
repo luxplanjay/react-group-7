@@ -7,6 +7,7 @@ export const add = text => {
     payload: {
       note: {
         id: shortid.generate(),
+        completed: false,
         text,
       },
     },
@@ -18,6 +19,15 @@ export const remove = id => {
     type: noteTypes.REMOVE_NOTE,
     payload: {
       id,
+    },
+  };
+};
+
+export const changeFilter = filter => {
+  return {
+    type: noteTypes.CHANGE_FILTER,
+    payload: {
+      filter,
     },
   };
 };

@@ -22,7 +22,7 @@ class NoteForm extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input type="text" value={this.state.text} onChange={this.onChange} />
-        <button type="submit">Save</button>
+        <button type="submit">Save note</button>
       </form>
     );
   }
