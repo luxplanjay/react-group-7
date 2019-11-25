@@ -13,21 +13,16 @@ const getFilteredNotes = createSelector(
   },
 );
 
-export default { getNotes, getFilter, getFilteredNotes };
+// TODO: мем
+const getNoteById = (state, id) => {
+  const notes = getNotes(state);
 
-// 1) - перебирающие методы возаращют массив
-// 2) - массив это ссылочный тип данных
-// 3) [1,2,3] === [1,2,3] -> false
+  return notes.find(note => note.id === id);
+};
 
-// 1
-// timerValue = 0
-// items = [batman, superman, green lantern]
-// filter = man
-//  getFilteredNotes(state) -> [batman, superman]
-
-// Когда изменяется redux state вызываются все mapStateToProps
-// timerValue = 5
-// NoteList -> mapStateToProps
-// getFilteredNotes(state) -> [batman, superman]
-// [batman, superman] === [batman, superman] -> false
-// NoteFilter -> re-render
+export default {
+  getNotes,
+  getFilter,
+  getFilteredNotes,
+  getNoteById,
+};

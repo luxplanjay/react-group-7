@@ -1,0 +1,38 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": ["timerValue", "notes"],
+  "properties": {
+    "timerValue": {
+      "$id": "#/properties/timerValue",
+      "type": "integer",
+      "title": "The Timervalue Schema",
+      "default": 0,
+      "examples": [0]
+    },
+    "notes": {
+      "$id": "#/properties/notes",
+      "type": "object",
+      "title": "The Notes Schema",
+      "required": ["items", "filter"],
+      "properties": {
+        "items": {
+          "$id": "#/properties/notes/properties/items",
+          "type": "array",
+          "title": "The Items Schema"
+        },
+        "filter": {
+          "$id": "#/properties/notes/properties/filter",
+          "type": "string",
+          "title": "The Filter Schema",
+          "default": "",
+          "examples": [""],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

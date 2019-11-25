@@ -1,13 +1,13 @@
 import React from 'react';
-import Timer from './Timer';
+// import Timer from './Timer';
 import NoteForm from './NoteForm';
 import NoteList from './NoteList';
 import NoteFilter from './NoteFilter';
 
 const App = () => (
   <div className="App">
-    <Timer />
-    <hr />
+    {/* <Timer />
+    <hr /> */}
     <NoteForm />
     <NoteFilter />
     <NoteList />
