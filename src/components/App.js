@@ -4,11 +4,11 @@ import NoteList from './NoteList';
 import NoteFilter from './NoteFilter';
 
 const App = () => (
-  <div className="App">
+  <>
     <NoteForm />
     <NoteFilter />
     <NoteList />
-  </div>
+  </>
 );
 
 export default App;

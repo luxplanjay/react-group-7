@@ -1,0 +1,14 @@
+{
+  "notes": [
+    {
+      "text": "1",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "text": "2",
+      "completed": false,
+      "id": 2
+    }
+  ]
+}

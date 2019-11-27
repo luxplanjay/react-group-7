@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as noteActions from '../redux/notes/noteActions';
+import noteOperations from '../redux/notes/noteOperations';
 
 class NoteForm extends Component {
   state = {
@@ -30,7 +30,7 @@ class NoteForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSave: text => dispatch(noteActions.add(text)),
+    onSave: text => dispatch(noteOperations.saveNote(text)),
   };
 };
 
