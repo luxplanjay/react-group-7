@@ -1,21 +1,11 @@
 import { combineReducers } from 'redux';
 import authActionTypes from './authActionTypes';
-// {
-//   auth: {
-//     user: {
-//       name: '',
-//       email: ''
-//     },
-//     token: 'qweqweqweqwe',
-//     error: null,
-//     loading: false
-//   }
-// }
 
 const user = (state = { name: null, email: null }, { type, payload }) => {
   switch (type) {
     case authActionTypes.REGISTER_SUCCESS:
     case authActionTypes.LOGIN_SUCCESS:
+    case authActionTypes.GET_CURRENT_SUCCESS:
       return payload.user;
 
     case authActionTypes.LOGOUT_SUCCESS:
@@ -45,6 +35,7 @@ const error = (state = null, { type, payload }) => {
     case authActionTypes.REGISTER_FAILURE:
     case authActionTypes.LOGIN_FAILURE:
     case authActionTypes.LOGOUT_FAILURE:
+    case authActionTypes.GET_CURRENT_FAILURE:
       return payload.error;
 
     default:

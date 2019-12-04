@@ -1,8 +1,14 @@
+import HomeView from './views/HomeView/HomeView';
 import RegisterView from './views/RegisterView/RegisterView';
 import LoginView from './views/LoginView/LoginView';
-import LogoutView from './views/LogoutView/LogoutView';
+import TasksView from './views/TasksView/TasksView';
 
 export default {
+  HOME: {
+    path: '/',
+    exact: true,
+    component: HomeView,
+  },
   REGISTER: {
     path: '/register',
     component: RegisterView,
@@ -11,8 +17,8 @@ export default {
     path: '/login',
     component: LoginView,
   },
-  LOGOUT: {
-    path: '/logout',
-    component: LogoutView,
+  TASKS: {
+    path: '/tasks',
+    component: TasksView,
   },
 };

@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import authOperations from '../../redux/auth/authOperations';
 
+const styles = {
+  form: {
+    width: 320,
+  },
+  label: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 4,
+  },
+};
+
 class RegisterView extends Component {
-  state = { name: '', email: '', password: '' };
+  state = {
+    name: '',
+    email: '',
+    password: '',
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -23,8 +38,8 @@ class RegisterView extends Component {
       <div>
         <h1>Register page</h1>
 
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <form onSubmit={this.handleSubmit} style={styles.form}>
+          <label style={styles.label}>
             Name
             <input
               type="text"
@@ -34,7 +49,7 @@ class RegisterView extends Component {
             />
           </label>
 
-          <label>
+          <label style={styles.label}>
             Email
             <input
               type="email"
@@ -44,7 +59,7 @@ class RegisterView extends Component {
             />
           </label>
 
-          <label>
+          <label style={styles.label}>
             Password
             <input
               type="password"

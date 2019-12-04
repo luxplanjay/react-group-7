@@ -2,8 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import authOperations from '../../redux/auth/authOperations';
 
+const styles = {
+  form: {
+    width: 320,
+  },
+  label: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 4,
+  },
+};
+
 class LoginView extends Component {
-  state = { email: '', password: '' };
+  state = {
+    email: '',
+    password: '',
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -23,8 +37,8 @@ class LoginView extends Component {
       <div>
         <h1>Login page</h1>
 
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <form onSubmit={this.handleSubmit} style={styles.form}>
+          <label style={styles.label}>
             Email
             <input
               type="email"
@@ -34,7 +48,7 @@ class LoginView extends Component {
             />
           </label>
 
-          <label>
+          <label style={styles.label}>
             Password
             <input
               type="password"

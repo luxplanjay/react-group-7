@@ -41,6 +41,22 @@ const logoutFailure = error => ({
   payload: { error },
 });
 
+const getCurrentStart = () => ({
+  type: authActionTypes.GET_CURRENT_START,
+});
+
+const getCurrentSuccess = user => ({
+  type: authActionTypes.GET_CURRENT_SUCCESS,
+  payload: {
+    user,
+  },
+});
+
+const getCurrentFailure = error => ({
+  type: authActionTypes.GET_CURRENT_FAILURE,
+  payload: { error },
+});
+
 export default {
   registerStart,
   registerSuccess,
@@ -51,4 +67,7 @@ export default {
   loginStart,
   loginSuccess,
   loginFailure,
+  getCurrentStart,
+  getCurrentSuccess,
+  getCurrentFailure,
 };
