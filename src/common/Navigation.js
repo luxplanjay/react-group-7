@@ -13,7 +13,7 @@ const styles = {
     color: '#2A363B',
   },
   activeLink: {
-    color: '#E84A5F',
+    color: '#F21D41',
   },
 };
 
@@ -54,13 +54,6 @@ const Navigation = ({ isAuthenticated }) => (
         </NavLink>
       </>
     )}
-    {/* <NavLink
-      to={routes.LOGOUT.path}
-      style={styles.link}
-      activeStyle={styles.activeLink}
-    >
-      Logout
-    </NavLink> */}
   </nav>
 );
 

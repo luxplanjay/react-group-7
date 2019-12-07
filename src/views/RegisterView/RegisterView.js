@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import withAuthRedirect from '../../common/hoc/withAuthRedirect';
 import authOperations from '../../redux/auth/authOperations';
 
 const styles = {
@@ -80,7 +82,10 @@ const mapDispatchToProps = dispatch => ({
   onRegister: credentials => dispatch(authOperations.registerUser(credentials)),
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
+export default compose(
+  withAuthRedirect,
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
 )(RegisterView);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import PrivateRoute from './common/PrivateRoute';
 import Layout from './common/Layout';
 import routes from './routes';
 import authOperations from './redux/auth/authOperations';
@@ -28,7 +29,7 @@ class App extends Component {
               path={routes.LOGIN.path}
               component={routes.LOGIN.component}
             />
-            <Route
+            <PrivateRoute
               path={routes.TASKS.path}
               component={routes.TASKS.component}
             />
@@ -39,9 +40,9 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onGetCurrentUser: () => dispatch(authOperations.getCurrentUser()),
-});
+const mapDispatchToProps = {
+  onGetCurrentUser: authOperations.getCurrentUser,
+};
 
 export default connect(
   null,

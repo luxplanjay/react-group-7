@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import withAuthRedirect from '../../common/hoc/withAuthRedirect';
 import authOperations from '../../redux/auth/authOperations';
 
 const styles = {
@@ -65,11 +67,18 @@ class LoginView extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onLogin: credentials => dispatch(authOperations.loginUser(credentials)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   onLogin: credentials => dispatch(authOperations.loginUser(credentials)),
+// });
 
-export default connect(
-  null,
-  mapDispatchToProps,
+const mapDispatchToProps = {
+  onLogin: authOperations.loginUser,
+};
+
+export default compose(
+  withAuthRedirect,
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
 )(LoginView);
