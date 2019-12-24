@@ -1,0 +1,20 @@
+.List {
+  list-style: none;
+  padding: 8px;
+  overflow: hidden;
+  width: 600px;
+}
+
+.List-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+}
+
+.List-item + .List-item {
+  margin-top: 8px;
+}

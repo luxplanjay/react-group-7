@@ -1,43 +1,52 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Layout from './Layout';
-import Counter from './Counter';
-import SignupForm from './SignupForm';
-import Clock from './Clock';
-import News from './News';
-import Profile from './Profile';
-import Todos from './Todos';
+import React, { useState } from 'react';
+import Header from './Header';
+import Button from './Button';
+import Sidebar from './Sidebar';
+import Items from './Items/Items';
 
-const App = () => (
-  <BrowserRouter>
-    <Layout>
-      <Switch>
-        <Route path="/counter">
-          <Counter />
-        </Route>
+export default function App() {
+  const [showSidebar, setShowSidebar] = useState(false);
 
-        <Route path="/signup">
-          <SignupForm />
-        </Route>
+  return (
+    <>
+      <Header />
 
-        <Route path="/clock">
-          <Clock />
-        </Route>
+      <Button
+        label="Show Sidebar"
+        onClick={() => setShowSidebar(prevState => !prevState)}
+      />
 
-        <Route path="/news">
-          <News />
-        </Route>
+      <Items />
 
-        <Route path="/context">
-          <Profile />
-        </Route>
+      <Sidebar isOpen={showSidebar} onClose={() => setShowSidebar(false)} />
 
-        <Route path="/todos">
-          <Todos />
-        </Route>
-      </Switch>
-    </Layout>
-  </BrowserRouter>
-);
+      {/* <CSSTransition
+        in={showComments}
+        timeout={250}
+        classNames="fade"
+        unmountOnExit
+      >
+        <section>
+          <h2>Commnets</h2>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt,
+            ullam modi voluptates sint obcaecati temporibus incidunt alias
+            numquam impedit laudantium commodi cum vitae saepe esse quae
+            accusamus repellendus! Iste mollitia amet maxime culpa! Dignissimos
+            doloribus sed temporibus veritatis. At ab corrupti tempora atque
+            ratione voluptate ut cumque itaque mollitia nostrum!
+          </p>
 
-export default App;
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt,
+            ullam modi voluptates sint obcaecati temporibus incidunt alias
+            numquam impedit laudantium commodi cum vitae saepe esse quae
+            accusamus repellendus! Iste mollitia amet maxime culpa! Dignissimos
+            doloribus sed temporibus veritatis. At ab corrupti tempora atque
+            ratione voluptate ut cumque itaque mollitia nostrum!
+          </p>
+        </section>
+      </CSSTransition> */}
+    </>
+  );
+}
