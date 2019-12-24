@@ -26,7 +26,7 @@ export default function Items() {
     <div>
       <Button label="Add Item" onClick={addItem} />
       <hr />
-      {items.length > 0 && <List items={items} onDelete={removeItem} />}
+      <List items={items} onDelete={removeItem} />
     </div>
   );
 }
